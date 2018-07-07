@@ -11,6 +11,10 @@ class SequencerTest < Minitest::Test
 	end
 
 	def test_it_schedules_a_single_task
-		assert_equal @sequencer.order("a"), "a"
+		assert_equal @sequencer.schedule("a"), "a"
+	end
+
+	def test_it_schedules_multiple_tasks
+		assert_equal @sequencer.schedule("abc"), "abc"
 	end
 end
