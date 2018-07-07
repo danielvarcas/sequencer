@@ -16,14 +16,14 @@ class SequencerTest < Minitest::Test
 	end
 
 	def test_it_schedules_a_single_task
-		assert_equal @sequencer.schedule("a"), "a"
+		assert_equal "a", @sequencer.schedule("a")
 	end
 
 	def test_it_schedules_multiple_tasks
-		assert_equal @sequencer.schedule("abc"), "abc"
+		assert_equal "abc", @sequencer.schedule("abc")
 	end
 
 	def test_it_schedules_multiple_tasks_with_dependencies
-		assert_equal @sequencer.schedule(@hash_abc), "abc"
+		assert_equal "abc", @sequencer.schedule(@hash_abc)
 	end
 end
