@@ -4,6 +4,11 @@ require '../app/app'
 class SequencerTest < Minitest::Test 
 	def setup
 		@sequencer = Sequencer.new
+		@hash_abc = {
+			"a" => "", 
+			"b" => "c", 
+			"c" => ""
+		}
 	end
 
 	def test_it_works
@@ -16,5 +21,9 @@ class SequencerTest < Minitest::Test
 
 	def test_it_schedules_multiple_tasks
 		assert_equal @sequencer.schedule("abc"), "abc"
+	end
+
+	def test_it_schedules_multiple_tasks_with_dependencies
+		assert_equal @sequencer.schedule(@hash_abc), "abc"
 	end
 end
