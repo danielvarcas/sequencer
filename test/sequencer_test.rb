@@ -67,6 +67,7 @@ class SequencerTest < Minitest::Test
 		end
 	end
 
+	#7
 	def test_tasks_cant_have_circular_dependencies
 		assert_raises do
 			@sequencer.schedule(@hash_circular)
