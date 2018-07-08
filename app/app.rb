@@ -9,7 +9,7 @@ class Sequencer
 		if tasks.class == Hash
 			@counter = tasks.length
 			@order = []
-			until (@counter == 0) || (@order.length == tasks.length) 
+			until (@order.length == tasks.length) 
 				tasks.each do |key, value|
 					if key == value
 						raise ArgumentError.new("Tasks cannot depend on themselves: #{key} => #{value}")
@@ -19,6 +19,9 @@ class Sequencer
 						@counter = tasks.length
 					else
 						@counter = @counter - 1
+					end
+					if @counter = 0
+						raise ArgumentError.new("Tasks cannot have circular dependencies.")
 					end
 				end
 			end

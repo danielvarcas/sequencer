@@ -61,9 +61,15 @@ class SequencerTest < Minitest::Test
 	end
 
 	#6
-	def test_that_jobs_cant_depend_on_themselves
+	def test_tasks_cant_depend_on_themselves
 		assert_raises do 
 			@sequencer.schedule(@hash_self_dependent)
+		end
+	end
+
+	def test_tasks_cant_have_circular_dependencies
+		assert_raises do
+			@sequencer.schedule(@hash_circular)
 		end
 	end
 
