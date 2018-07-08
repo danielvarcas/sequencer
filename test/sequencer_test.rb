@@ -51,7 +51,13 @@ class SequencerTest < Minitest::Test
 	end
 
 	#4
-	def test_it_schedules_multiple_tasks_with_dependencies
+	def test_it_schedules_multiple_tasks_with_a_single_dependency
 		assert_equal "acb", @sequencer.schedule(@hash_abc)
 	end
+
+	#5
+	def test_it_schedules_multiple_tasks_with_multiple_dependencies
+		assert_equal "adfcbe", @sequencer.schedule(@hash_long)
+	end
+
 end
