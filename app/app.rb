@@ -10,7 +10,10 @@ class Sequencer
 			@counter = tasks.length
 			@order = []
 			until (@counter == 0) || (@order.length == tasks.length) 
-				tasks.each do |key, value|				
+				tasks.each do |key, value|
+					if key == value
+						raise ArgumentError.new("Tasks cannot depend on themselves: #{key} => #{value}")
+					end
 					if (@order.include? value) || (value == "")
 						@order.push(key) unless @order.include? key
 						@counter = tasks.length

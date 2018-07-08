@@ -60,4 +60,11 @@ class SequencerTest < Minitest::Test
 		assert_equal "adfcbe", @sequencer.schedule(@hash_long)
 	end
 
+	#6
+	def test_that_jobs_cant_depend_on_themselves
+		assert_raises do 
+			@sequencer.schedule(@hash_self_dependent)
+		end
+	end
+
 end
