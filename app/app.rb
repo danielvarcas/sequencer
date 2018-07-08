@@ -3,7 +3,7 @@ require_relative '../test/sequencer_test'
 class Sequencer
 	def schedule(tasks)
 		if tasks.class == String
-			tasks
+			return tasks
 		end
 
 		if tasks.class == Hash
