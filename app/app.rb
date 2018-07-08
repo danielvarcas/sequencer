@@ -7,18 +7,19 @@ class Sequencer
 		end
 
 		if tasks.class == Hash
-			counter = tasks.length
+			@counter = tasks.length
 			@order = []
-			tasks.each do |key, value|
-				until counter == 0
-					if @order.include? value
-						@order.push(key) unless @order.include? key
+			until (@counter == 0) || (@order.length == tasks.length) 
+				tasks.each do |key, value|				
+					if (@order.include? value) || (value == "")
+						@order.push(key) # unless @order.include? key
+						@counter = tasks.length
 					else
-						counter = counter - 1
+						@counter = @counter - 1
 					end
 				end
 			end
-			@order
+			@order.join
 		end
 	end
 end
