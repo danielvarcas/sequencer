@@ -1,10 +1,6 @@
 require_relative '../test/sequencer_test'
 
 class Sequencer
-	def initialise
-		@order = []
-	end
-
 	def schedule(tasks)
 		if tasks.class == String
 			return tasks
@@ -12,6 +8,7 @@ class Sequencer
 
 		if tasks.class == Hash
 			counter = tasks.length
+			@order = []
 			tasks.each do |key, value|
 				until counter == 0
 					if @order.include? value
