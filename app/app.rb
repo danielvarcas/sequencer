@@ -1,5 +1,5 @@
 require_relative '../test/tasks_test'
-require 'pry'
+require_relative '../test/dependencies_test'
 
 class Tasks
 	attr_accessor :tasks, :dependencies
@@ -10,13 +10,15 @@ class Tasks
 	end
 end
 
-=begin
-
 class Orderer
 	attr_reader :order
-	def order(tasks, dependencies=nil)
+
+	def order(params = {})
 	end
 end
+
+=begin
+
 
 ### old
 
