@@ -2,21 +2,15 @@ require_relative '../test/tasks_test'
 require 'pry'
 
 class Tasks
-	attr_accessor :tasks
+	attr_accessor :tasks, :dependencies
 
 	def initialize(params = {})
 		@tasks = params.fetch(:tasks, nil)
+		@dependencies = params.fetch(:dependencies, nil)
 	end
 end
 
 =begin
-
-class Dependencies
-	attr_accessor :dependencies
-	def initialise(params = {})
-		@dependencies = dependencies
-	end
-end
 
 class Orderer
 	attr_reader :order
