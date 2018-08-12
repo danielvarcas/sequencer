@@ -1,20 +1,19 @@
-require_relative '../test/tasks_test'
-require_relative '../test/dependencies_test'
+require_relative '../test/orderable_test'
 
-class Tasks
+class Orderable
 	attr_accessor :tasks, :dependencies
 
 	def initialize(params = {})
 		@tasks = params.fetch(:tasks, nil)
 		@dependencies = params.fetch(:dependencies, nil)
 	end
-end
 
-class Orderer
-	attr_reader :order
-
-	def order(params = {})
+	def order
+		if @dependencies == nil
+			@tasks
+		end
 	end
+
 end
 
 =begin
