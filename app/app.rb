@@ -1,9 +1,39 @@
-require_relative '../test/sequencer_test'
-# require 'pry'
+require_relative '../test/tasks_test'
+require 'pry'
+
+class Tasks
+	attr_accessor :tasks
+
+	def initialize(params = {})
+		@tasks = params.fetch(:tasks, nil)
+	end
+end
+
+=begin
+
+class Dependencies
+	attr_accessor :dependencies
+	def initialise(params = {})
+		@dependencies = dependencies
+	end
+end
+
+class Orderer
+	attr_reader :order
+	def order(tasks, dependencies=nil)
+	end
+end
+
+### old
 
 class Sequencer
-	def schedule(tasks)
-		@tasks = tasks
+	
+
+	def schedule(tasks, dependencies=nil)
+
+
+
+	end
 		if tasks.class == String
 			return @tasks
 		end
@@ -33,3 +63,5 @@ class Sequencer
 		end
 	end
 end
+
+=end
