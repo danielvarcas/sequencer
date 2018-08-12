@@ -61,7 +61,7 @@ class SequencerTest < Minitest::Test
 	end
 
 	#6
-	def test_tasks_cant_depend_on_themselves
+	def test_tasks_cant_depend_on_themselves        # improve: should test for specific errors in case of red herrings
 		assert_raises do 
 			@sequencer.schedule(@hash_self_dependent)
 		end
