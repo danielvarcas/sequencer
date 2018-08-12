@@ -9,11 +9,15 @@ class Orderable
 	end
 
 	def order
-		if @dependencies == nil
-			@tasks
+		@order = []
+		task_array = @tasks.split(//)
+		until (@order.length == @tasks.length)
+			task_array.each do |task|
+				@order << task
+			end
 		end
+		@order.join
 	end
-
 end
 
 =begin
