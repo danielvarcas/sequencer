@@ -27,9 +27,7 @@ class Orderer
 		prepare_orderables if @to_order.empty?
 		until (@ordered.length == @to_order.length)
 			@to_order.each do |orderable|
-				unless orderable.dependent? && ((@ordered.include? orderable.dependency) == false)
-					@ordered << orderable.task
-				end
+				@ordered << orderable.task
 			end
 		end
 		@ordered
