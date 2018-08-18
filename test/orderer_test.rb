@@ -3,19 +3,6 @@ require '../app/orderer'
 require 'pry'
 
 class OrdererTest < Minitest::Test 
-	
-	def test_it_orders_a_single_task
-		skip
-		@orderer = Orderer.new(:tasks => "a")
-		assert_equal ["a"], @orderer.order
-	end
-	
-	def test_it_orders_multiple_tasks
-		skip
-		@orderer = Orderer.new(:tasks => "abc")
-		assert_equal ["a","b","c"], @orderer.order
-	end
-	
 
 	def attributes_test(assertion, expected)
 		assertion.each_with_index do |x, index|
@@ -42,6 +29,17 @@ class OrdererTest < Minitest::Test
 		expected = @orderer.prepare_orderables
 		assert  attributes_test(assertion, expected) == true
 		assert attributes_test(false_assertion, expected) == false 
+	end
+
+	def test_it_orders_a_single_task
+		@orderer = Orderer.new(:tasks => "a")
+		assert_equal ["a"], @orderer.order
+	end
+	
+	def test_it_orders_multiple_tasks
+		skip
+		@orderer = Orderer.new(:tasks => "abc")
+		assert_equal ["a","b","c"], @orderer.order
 	end
 
 	def test_it_orders_tasks_with_dependencies

@@ -13,7 +13,11 @@ class Orderer
 
 	def prepare_orderables
 		@tasks.each do |task|
-			orderable = Orderable.new({:task => task, :dependency => @dependencies[task]})
+			params = {:task => task}
+			unless @dependencies.nil?
+				params[:dependency] = @dependencies[task]
+			end
+			orderable = Orderable.new(params)
 			@to_order << orderable
 		end
 		self.to_order
@@ -21,17 +25,10 @@ class Orderer
 
 	def order
 		prepare_orderables if @to_order.empty?
-		@tasks.each do |task|
-			unless @dependencies.nil?
-				dependency = @dependencies[task]
-			end
-			@orderable = Orderable.new({:task => task, :dependency => dependency})
-			@to_order << @orderable.task
-		end
 		until (@ordered.length == @to_order.length)
-			@to_order.each do |task|
-				unless @orderable.dependent? && ((@ordered.include? @orderable.dependency) == false)
-					@ordered << @orderable.task
+			@to_order.each do |orderable|
+				unless orderable.dependent? && ((@ordered.include? orderable.dependency) == false)
+					@ordered << orderable.task
 				end
 			end
 		end
