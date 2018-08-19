@@ -43,13 +43,7 @@ class Orderer
 	end
 
 	def dependency_satisfied?(orderable)
-		if (@ordered.include? orderable.dependency)
-			true
-		elsif orderable.self_dependent?
-			true
-		else
-			false 
-		end
+		((@ordered.include? orderable.dependency) || orderable.self_dependent?) ? true : false
 	end
 
 	def order
