@@ -30,6 +30,16 @@ class Orderer
 		end
 	end
 
+	def dependency_satisfied?(orderable)
+		if (@ordered.include? orderable.dependency)
+			true
+		elsif orderable.self_dependent?
+			true
+		else
+			false 
+		end
+	end
+
 	def order
 		prepare_orderables if @to_order.empty?
 		@counter = Counter.new(@to_order.length)
@@ -37,11 +47,7 @@ class Orderer
 			return @ordered if (@counter.done?)
 			@to_order.each do |orderable|
 				if orderable.dependent?
-					if (@ordered.include? orderable.dependency)
-						push_task(orderable)
-					elsif orderable.self_dependent?
-						push_task(orderable) 
-					end
+					push_task(orderable) if dependency_satisfied?(orderable) 
 				else
 					push_task(orderable)
 				end
