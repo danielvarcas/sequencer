@@ -46,18 +46,26 @@ class Orderer
 		((@ordered.include? orderable.dependency) || orderable.self_dependent?) ? true : false
 	end
 
-	def order
+	def check_orderable(orderable)
+		if orderable.dependent?
+			push_task(orderable) if dependency_satisfied?(orderable) 
+		else
+			push_task(orderable)
+		end
+		@counter.decrease
+	end
+
+	def setup_order
 		prepare_orderables if @to_order.empty?
 		@counter = Counter.new(@to_order.length)
+	end
+
+	def order
+		setup_order
 		until @ordered.length == @to_order.length
 			return @ordered if @counter.done?
 			@to_order.each do |orderable|
-				if orderable.dependent?
-					push_task(orderable) if dependency_satisfied?(orderable) 
-				else
-					push_task(orderable)
-				end
-				@counter.decrease
+				check_orderable(orderable)
 			end
 		end
 		@ordered
