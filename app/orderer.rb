@@ -44,7 +44,7 @@ class Orderer
 		prepare_orderables if @to_order.empty?
 		@counter = Counter.new(@to_order.length)
 		until @ordered.length == @to_order.length
-			return @ordered if (@counter.done?)
+			return @ordered if @counter.done?
 			@to_order.each do |orderable|
 				if orderable.dependent?
 					push_task(orderable) if dependency_satisfied?(orderable) 
