@@ -25,9 +25,13 @@ class Orderer
 
 	def order
 		prepare_orderables if @to_order.empty?
-		until (@ordered.length == @to_order.length)
+		until @ordered.length == @to_order.length
 			@to_order.each do |orderable|
-				@ordered << orderable.task
+				if orderable.dependent?
+					@ordered.push(orderable.task) if (@ordered.include? orderable.dependency)
+				else
+					@ordered << orderable.task unless (@ordered.include? orderable.task)
+				end
 			end
 		end
 		@ordered

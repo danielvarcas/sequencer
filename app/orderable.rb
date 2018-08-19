@@ -9,7 +9,7 @@ class Orderable
 	end
 
 	def dependent?
-		if self.dependency.nil?
+		if (self.dependency.nil? || self.dependency == "")
 			return false
 		else
 			return true
