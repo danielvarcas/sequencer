@@ -11,14 +11,26 @@ class Orderer
 		@ordered = []
 	end
 
+	def create_orderable(params={})
+		orderable = Orderable.new(params)
+		push_to_order(orderable)
+	end
+
+	def push_to_order(orderable)
+		@to_order << orderable
+	end
+
+	def set_orderable_parameters(task)
+		@params = {:task => task}
+		unless @dependencies.nil?
+			@params[:dependency] = @dependencies[task]
+		end
+	end
+
 	def prepare_orderables
 		@tasks.each do |task|
-			params = {:task => task}
-			unless @dependencies.nil?
-				params[:dependency] = @dependencies[task]
-			end
-			orderable = Orderable.new(params)
-			@to_order << orderable
+			set_orderable_parameters(task)
+			create_orderable(@params)
 		end
 		self.to_order
 	end
