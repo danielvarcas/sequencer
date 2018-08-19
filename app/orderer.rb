@@ -28,7 +28,11 @@ class Orderer
 		until @ordered.length == @to_order.length
 			@to_order.each do |orderable|
 				if orderable.dependent?
-					@ordered.push(orderable.task) if (@ordered.include? orderable.dependency)
+					if (@ordered.include? orderable.dependency)
+						@ordered.push(orderable.task) unless (@ordered.include? orderable.task)
+					elsif orderable.self_dependent?
+						@ordered.push(orderable.task) unless (@ordered.include? orderable.task)
+					end
 				else
 					@ordered << orderable.task unless (@ordered.include? orderable.task)
 				end
