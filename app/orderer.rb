@@ -26,14 +26,15 @@ class Orderer
 	def push_task(orderable)
 		unless (@ordered.include? orderable.task)
 			@ordered.push(orderable.task)
-			@counter = @counter -1
+			@counter.reset
 		end
 	end
 
 	def order
 		prepare_orderables if @to_order.empty?
-		@counter = @to_order.length
+		@counter = Counter.new(@to_order.length)
 		until @ordered.length == @to_order.length
+			return @ordered if (@counter.done?)
 			@to_order.each do |orderable|
 				if orderable.dependent?
 					if (@ordered.include? orderable.dependency)
@@ -44,6 +45,7 @@ class Orderer
 				else
 					push_task(orderable)
 				end
+				@counter.decrease
 			end
 		end
 		@ordered
