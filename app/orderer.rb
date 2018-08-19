@@ -23,18 +23,26 @@ class Orderer
 		self.to_order
 	end
 
+	def push_task(orderable)
+		unless (@ordered.include? orderable.task)
+			@ordered.push(orderable.task)
+			@counter = @counter -1
+		end
+	end
+
 	def order
 		prepare_orderables if @to_order.empty?
+		@counter = @to_order.length
 		until @ordered.length == @to_order.length
 			@to_order.each do |orderable|
 				if orderable.dependent?
 					if (@ordered.include? orderable.dependency)
-						@ordered.push(orderable.task) unless (@ordered.include? orderable.task)
+						push_task(orderable)
 					elsif orderable.self_dependent?
-						@ordered.push(orderable.task) unless (@ordered.include? orderable.task)
+						push_task(orderable) 
 					end
 				else
-					@ordered << orderable.task unless (@ordered.include? orderable.task)
+					push_task(orderable)
 				end
 			end
 		end
